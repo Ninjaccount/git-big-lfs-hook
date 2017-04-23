@@ -14,7 +14,7 @@ Configuration
 -------------
 You can specify max size in bytes (default is 1M)
 
-`export GITBIG_MAX_SIZE=50000` here is 500k Configuration
+`export GITBIG_MAX_SIZE=500000` here is 500k Configuration
 
 To activate debug
 
