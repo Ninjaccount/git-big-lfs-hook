@@ -22,7 +22,12 @@ fi
 
 MODIFIED_FILES_IN_LFS=$(git lfs status --porcelain | sed -r 's/([A-Z].\s)(.*)(\s[0-9]+)/\2/')
 ALL_MODIFIED_FILES=$(git diff --cached --name-status | cut -f 2 | xargs -d "\n" stat -c "%n")
-CONCAT=("${MODIFIED_FILES_IN_LFS[@]}" "${ALL_MODIFIED_FILES[@]}")
+CONCAT="${ALL_MODIFIED_FILES[@]}"
+echo $MODIFIED_FILES_IN_LFS
+if [ "$MODIFIED_FILES_IN_LFS" != "" ]; then
+  echo "total"
+  CONCAT+="${MODIFIED_FILES_IN_LFS[@]}"
+fi
 MODIFIED_FILES_NOT_IN_LFS=$(printf '%s\n' "${CONCAT[@]}" | sort | uniq -u)
 
 logDebug MODIFIED_FILES_NOT_IN_LFS
@@ -60,5 +65,3 @@ if [ "$TOO_BIG_FILE_FOUND" = true ]; then
   echo "git lfs track " $(printf '"%s" ' "${TOO_BIG_FILES[@]}")
   exit 1
 fi
-
-exit 1
