@@ -10,6 +10,15 @@ Installation
 -------------
 Save or link `pre-commit.sh` as `.git/hooks/pre-commit`
 
+Usage
+-------------
+
+1. `git commit ... #Hook won't let you commit if lfs doesn't track files above GITBIG_MAX_SIZE. You can also commit without message for testing purpose`
+2. `git lfs track ... #Add tracks printed by the hook`
+3. `git reset ... #Reset the newly tracked files in order to let lfs reindex them` or `git reset HEAD^ #if the commit was performed`
+4. `git add ... #Reindex the files`
+5. `git commit ... #Now hook will let you commit`
+
 Configuration
 -------------
 You can specify max size in bytes (default is 1M)
