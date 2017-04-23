@@ -23,10 +23,8 @@ fi
 MODIFIED_FILES_IN_LFS=$(git lfs status --porcelain | sed -r 's/([A-Z].\s)(.*)(\s[0-9]+)/\2/')
 ALL_MODIFIED_FILES=$(git diff --cached --name-status | cut -f 2 | xargs -d "\n" stat -c "%n")
 CONCAT="${ALL_MODIFIED_FILES[@]}"
-echo $MODIFIED_FILES_IN_LFS
 if [ "$MODIFIED_FILES_IN_LFS" != "" ]; then
-  echo "total"
-  CONCAT+="${MODIFIED_FILES_IN_LFS[@]}"
+  CONCAT+=("${MODIFIED_FILES_IN_LFS[@]}")
 fi
 MODIFIED_FILES_NOT_IN_LFS=$(printf '%s\n' "${CONCAT[@]}" | sort | uniq -u)
 
