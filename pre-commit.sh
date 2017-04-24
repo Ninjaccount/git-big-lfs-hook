@@ -19,8 +19,8 @@ MAX_FILE_SIZE=$GITBIG_MAX_SIZE
 if [ -z $GITBIG_MAX_SIZE ]; then
   MAX_FILE_SIZE=1000000
 fi
-
-MODIFIED_FILES_IN_LFS=$(git lfs status --porcelain | sed -r 's/([A-Z].\s)(.*)(\s[0-9]+)/\2/')
+#Regexp : 0 or 1 space, then 1* status letters, then 1*, then the file name, then 1 space and finally the file size.
+MODIFIED_FILES_IN_LFS=$(git lfs status --porcelain | sed -r 's/(\s?[A-Z]+\s+)(.*)(\s[0-9]+)/\2/')
 ALL_MODIFIED_FILES=$(git diff --cached --name-status | cut -f 2 | xargs -d "\n" stat -c "%n")
 CONCAT="${ALL_MODIFIED_FILES[@]}"
 if [ "$MODIFIED_FILES_IN_LFS" != "" ]; then
